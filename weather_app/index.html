@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Weather</title>
+</head>
+
+<body>
+  <div id='content'>
+    <h1>Good Morning</h1>
+    <img id=src src="" alt="weather">
+  </div>
+
+  <script>
+    var e = document.getElementById('content');
+    var actualTemp;
+    var feelTemp;
+    var humidity;
+
+    let link = 'http://api.openweathermap.org/data/2.5/weather?q=Vancouver,ca&APPID=fdc0857b3e4c632fd2809e5c020bd83d';
+    fetch(link, {
+        mode: 'cors'
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(response) {
+        actualTemp = ((response.main.temp - 232) * 5 / 9);
+        feelTemp = ((response.main.feels_like - 232) * 5 / 9);
+        humidity = (response.main.humidity);
+        windstrength = response.wind.deg;
+        console.log(response)
+
+        var div = document.createElement('div');
+        //div.appendChild(document.createElement('br'));
+        var feelsLike = document.createElement('h3');
+        feelsLike.id = 'Feels Like';
+        feelsLike.textContent = 'Feels Like: ' + Number.parseFloat(feelTemp).toPrecision(3) + ' C'
+        div.appendChild(document.createElement('br'));
+        div.appendChild(feelsLike);
+
+        var actual = document.createElement('h3');
+        actual.id = 'Actual Temp';
+        actual.textContent = 'Actual: ' + Number.parseFloat(actualTemp).toPrecision(3) + 'C'
+        div.appendChild(actual);
+
+        var hum = document.createElement('h3');
+        hum.id = 'Actual Temp';
+        hum.textContent = 'Humidity: ' + humidity + '%'
+        div.appendChild(hum);
+
+        var wind = document.createElement('h3');
+        wind.id = 'Actual Temp';
+        wind.textContent = 'Wind: ' + windstrength + ' degrees';
+        div.appendChild(wind);
+
+        e.appendChild(div)
+      });
+
+
+
+  </script>
+</body>
+
+</html>
